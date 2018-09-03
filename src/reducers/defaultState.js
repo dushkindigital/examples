@@ -1,4 +1,4 @@
 export default {
 	repos: [],
-	user: 'pdushkin'
+	user: ''
 };

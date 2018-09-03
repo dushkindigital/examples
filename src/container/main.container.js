@@ -1,60 +1,42 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
-import {connect} from 'react-redux';
-import Repo from '../component/repo.component';
+import { connect } from 'react-redux';
+
 import * as actionCreators from '../actions/index.js';
-import SearchBar from '../component/search.component.js';
+import SearchContainer from './search.container.js';
+import ReposContainer from './repos.container.js';
 
-class SearchContainer extends Component 
-{
-  
-  constructor(props) {
-		super(props);
-		this.state = {
-			user: ""
-		};
-		this.handleSearchUpdate = this.handleSearchUpdate.bind(this);
-		this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
-	}
+class MainContainer extends Component {
+  //constructor(props) {
+  //  super(props);
+  //}
 
-  handleSearchSubmit(e) {
-      e.preventDefault();
-      this.props.actions.loadUser(this.state.user);
-  }
-
-  handleSearchUpdate(e)
-  {
-    let user = e.target.value;
-    return this.setState({ user: user });
-  }
-
-  repoRow(repo, index) {
-    return (
-      <div key={index}>
-        <Repo key={repo.id} repo={repo} />
-      </div>
-    );
+  goTo(page) {
+      this.props.actions.goTo(page);
   }
 
   render() {
-      return (
-      <div>
-        <SearchBar 
-          handleSubmit={this.handleSearchSubmit}
-          user={this.state.user} 
-          handleChange={this.handleSearchUpdate}
-        />
-        
-      </div>
-      );
+    const { page } = this.props;
+    switch (page) {
+        case 'search':
+            return (
+            <div className="search-container">
+                <img src={require('../img/Github_Logo.png')} alt='logo' />
+                <SearchContainer />
+            </div>
+            );
+        case 'repos':
+            return  <ReposContainer />;
+         default:
+            return <SearchContainer />;
     }
+  }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   return {
-		repos: state.repos,
-		user: state.user
-	};
+    page: state.page,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -64,4 +46,4 @@ function mapDispatchToProps(dispatch) {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(MainContainer);

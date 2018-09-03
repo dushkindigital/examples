@@ -1,29 +1,46 @@
 import axios from 'axios';
 
 export function loadEvents(userId){
-    console.log(userId);
     return(dispatch)=>{
         return axios
-        .get(`https://api.github.com/users/pdushkin/events`)
+        .get(`https://api.github.com/users/${userId}/events/public`)
         .then((response)=>{
-            dispatch(newRepo(response.data));
+            dispatch(loadEventsSuccess(response.data));
         })
         .catch(err => {
-            throw err;
+            dispatch(loadEventsFailure(err));
+        })
+        .finally(() => {
+            dispatch(goTo('repos'));
         });
     }
 }
 
-export function newRepo(repos){
+export function goTo(page){
     return{
-        type:"REPO_GO",
+        type: "GO_TO_PAGE",
+        page
+    }
+}
+
+export function loadEventsSuccess(repos){
+    return{
+        type: "LOAD_EVENTS_SUCCESS",
         repos
+    }
+}
+
+
+export function loadEventsFailure(error){
+    return{
+        type: "LOAD_EVENTS_FAILURE",
+        error
     }
 }
 
 export function loadUser(user) {
 	return {
-		type: "USER_GO",
+		type: "LOAD_USER_SUCCESS",
 		user
 	};
 }

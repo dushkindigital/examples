@@ -1,14 +1,21 @@
 import defaultState from './defaultState';
 
-const reposReducer=(state = defaultState.repos, action)=>{
-    if(action.type==="REPO_GO"){
-        return{
-            repos:action.repos
-        }
-    } else {
-        return {
-            state
-        }
+const reposReducer = (state = defaultState.repos, action) => {
+    switch (action.type) {
+        case "LOAD_EVENTS_SUCCESS":
+            return {
+                ...state,
+                error: null,
+                repos: action.repos,
+            };
+        case "LOAD_EVENTS_FAILURE":
+            return {
+                ...state,
+                repos: defaultState.repos,
+                error: action.error,
+            }
+        default:
+            return state;
     }
 }
 

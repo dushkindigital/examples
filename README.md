@@ -1,4 +1,4 @@
-# ![Github + React + Redux Demo App]
+#[Github + React + Redux Demo App]
 
 > ### React + Redux app that has an input box to which you can enter a github user id and it returns that user's last 30 public events. Includes pagination and uses redux to manage state.
 

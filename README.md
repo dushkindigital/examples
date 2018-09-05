@@ -10,7 +10,7 @@ This is a reasonably quick example project that shows how react+redux can be use
 
 ## Getting started
 
-You can view a live demo over at https://blockapps.herokuapps.com/
+You can view a live demo over at https://blockapps.herokuapp.com/
 
 To get the frontend running locally:
 
